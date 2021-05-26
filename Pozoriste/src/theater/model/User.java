@@ -1,13 +1,19 @@
 package theater.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 	private String username;
 	private String firstName;
 	private String lastName;
 	private String password;
 	private String type; // ADMIN || USER
+	private List<Ticket> tickets;
 
 	public User() {
+		// create empty ticket list
+		tickets = new ArrayList<>();
 
 	}
 
@@ -49,6 +55,14 @@ public class User {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 
 }
