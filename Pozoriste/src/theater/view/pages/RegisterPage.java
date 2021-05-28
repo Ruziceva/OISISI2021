@@ -17,10 +17,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import theater.controller.UserController;
+import theater.model.User;
 import theater.view.MainWindow;
 
 public class RegisterPage extends JPanel {
@@ -131,7 +134,29 @@ public class RegisterPage extends JPanel {
 		panel.add(backBtn);
 
 		panel.setBackground(new Color(0, 0, 0, 0));
-		
+		register.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO: validate...
+				String username = usernameField.getText().trim();
+				String password = new String(passwordField.getPassword());
+				String lastName = lnameField.getText().trim();
+				String firstName = nameField.getText().trim();
+				User u = new User();
+				u.setUsername(username);
+				u.setPassword(password);
+				u.setFirstName(firstName);
+				u.setLastName(lastName);
+				u.setType("USER");
+				if (!new UserController().register(u)) {
+					JOptionPane.showMessageDialog(null, "Korisnik vec postoji", "Greska", JOptionPane.ERROR_MESSAGE);
+				}else {
+					MainWindow.getInstance().showPage(new LoginPage());
+				}
+			}
+		});
+
 		add(panel, gc);
 
 	}

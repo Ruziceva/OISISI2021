@@ -61,7 +61,12 @@ public class HomePage extends JPanel {
 		loginBtn.setFocusPainted(false);
 		loginBtn.setPreferredSize(btnSize);
 		loginBtn.setBackground(Color.WHITE);
-		
+		loginBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainWindow.getInstance().showPage(new LoginPage());
+			}
+		});
 		gc.gridy = 1;
 
 		add(loginBtn, gc);
@@ -71,7 +76,12 @@ public class HomePage extends JPanel {
 		registerBtn.setBackground(Color.WHITE);
 		registerBtn.setPreferredSize(btnSize);
 		registerBtn.setFocusPainted(false);
-		
+		registerBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainWindow.getInstance().showPage(new RegisterPage());
+			}
+		});
 		gc.gridy = 2;
 		gc.insets = new Insets(20, 0, 0, 0);
 		add(registerBtn, gc);
