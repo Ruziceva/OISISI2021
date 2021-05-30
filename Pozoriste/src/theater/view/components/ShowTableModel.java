@@ -1,6 +1,9 @@
 package theater.view.components;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,19 +19,19 @@ public class ShowTableModel extends AbstractTableModel {
 
 	private List<String> columns = new ArrayList<String>();
 
-	private ShowTableModel() {
-		columns.add("id");
-		columns.add("name");
-		columns.add("description");
-		columns.add("date");
-		columns.add("price");
+	public ShowTableModel() {
+		columns.add("ID");
+		columns.add("Ime");
+		columns.add("Opis");
+		columns.add("Datum");
+		columns.add("Cena");
 		if (GlobalState.getInstance().getLoggedInUser().getType() == "ADMIN")
-			columns.add("edit");
+			columns.add("");
 	}
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
+		return columnIndex==5;
 	}
 
 	@Override
@@ -58,7 +61,7 @@ public class ShowTableModel extends AbstractTableModel {
 		case 4:
 			return Float.class;
 		case 5:
-			return JButton.class;
+			return String.class;
 		default:
 			return null;
 		}
@@ -75,12 +78,12 @@ public class ShowTableModel extends AbstractTableModel {
 		case 2:
 			return show.getDescription();
 		case 3:
-			SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			return f.format(show.getDate());
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+			return (show.getDate().format(formatter));
 		case 4:
 			return show.getPrice();
 		case 5:
-			return new JButton("Iznemi");
+			return "Izmeni";
 
 		}
 		return null;
