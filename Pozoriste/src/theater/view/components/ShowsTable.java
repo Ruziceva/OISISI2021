@@ -43,6 +43,18 @@ public class ShowsTable extends JTable {
 
 			new ButtonColumn(this, delete, 5);
 		}
+		
+		//details:
+		Action details = new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				JTable table = (JTable) e.getSource();
+				int modelRow = Integer.valueOf(e.getActionCommand());
+				// TODO: show edit form
+			}
+		};
+
+		new ButtonColumn(this, details, 4);
+		
 		getTableHeader().setFont(new Font("arial", Font.BOLD, 24));
 
 	}

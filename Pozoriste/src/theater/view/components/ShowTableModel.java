@@ -1,13 +1,9 @@
 package theater.view.components;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.table.AbstractTableModel;
 
 import theater.GlobalState;
@@ -20,18 +16,18 @@ public class ShowTableModel extends AbstractTableModel {
 	private List<String> columns = new ArrayList<String>();
 
 	public ShowTableModel() {
-		columns.add("ID");
 		columns.add("Ime");
-		columns.add("Opis");
 		columns.add("Datum");
 		columns.add("Cena");
+		columns.add("Rasprodato");
+		columns.add("");// details btn
 		if (GlobalState.getInstance().getLoggedInUser().getType() == "ADMIN")
-			columns.add("");
+			columns.add(""); // edit btn
 	}
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return columnIndex==5;
+		return columnIndex >= 4;
 	}
 
 	@Override
@@ -51,20 +47,7 @@ public class ShowTableModel extends AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		switch (columnIndex) {
-		case 0:
-			return Long.class;
-		case 1:
-		case 2:
-		case 3:
-			return String.class;
-		case 4:
-			return Float.class;
-		case 5:
-			return String.class;
-		default:
-			return null;
-		}
+		return String.class;
 	}
 
 	@Override
@@ -72,16 +55,16 @@ public class ShowTableModel extends AbstractTableModel {
 		Show show = GlobalState.getInstance().getShows().get(r);
 		switch (c) {
 		case 0:
-			return show.getId();
-		case 1:
 			return show.getName();
-		case 2:
-			return show.getDescription();
-		case 3:
+		case 1:
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 			return (show.getDate().format(formatter));
-		case 4:
+		case 2:
 			return show.getPrice();
+		case 3:
+			return show.isSold() ? "DA" : "NE";
+		case 4:
+			return "Vise informacija";
 		case 5:
 			return "Izmeni";
 
