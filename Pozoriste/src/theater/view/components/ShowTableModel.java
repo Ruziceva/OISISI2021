@@ -15,7 +15,10 @@ public class ShowTableModel extends AbstractTableModel {
 
 	private List<String> columns = new ArrayList<String>();
 
+	private static ShowTableModel currentInstance;
+
 	public ShowTableModel() {
+		currentInstance = this;
 		columns.add("Ime");
 		columns.add("Datum");
 		columns.add("Cena");
@@ -70,5 +73,9 @@ public class ShowTableModel extends AbstractTableModel {
 
 		}
 		return null;
+	}
+
+	public static void refresh() {
+		currentInstance.fireTableDataChanged();
 	}
 }

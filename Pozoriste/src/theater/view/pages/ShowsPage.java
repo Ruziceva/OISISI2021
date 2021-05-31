@@ -3,6 +3,7 @@ package theater.view.pages;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -20,7 +21,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 
+import theater.GlobalState;
 import theater.controller.UserController;
+import theater.view.components.NewShow;
 import theater.view.components.ShowsTable;
 
 public class ShowsPage extends JPanel {
@@ -46,9 +49,11 @@ public class ShowsPage extends JPanel {
 		JLabel lab = new JLabel("Predstave");
 
 		lab.setFont(new Font("arial", Font.BOLD, 50));
-		JPanel p = new JPanel();
-		p.setLayout(new BorderLayout());
-		p.add(lab, BorderLayout.WEST);
+		JSplitPane p = new JSplitPane();
+		p.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+
+		p.add(lab, JSplitPane.TOP);
+		JPanel buttons = new JPanel();
 		JButton logout = new JButton("Odjava");
 		logout.addActionListener(new ActionListener() {
 			@Override
@@ -57,7 +62,25 @@ public class ShowsPage extends JPanel {
 			}
 		});
 		logout.setPreferredSize(new Dimension(150, 40));
-		p.add(logout, BorderLayout.EAST);
+
+		JButton newShow = new JButton("Nova");
+		newShow.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewShow().setVisible(true);
+			}
+		});
+		newShow.setPreferredSize(new Dimension(150, 40));
+		//add new btn for admin
+		if (GlobalState.getInstance().getLoggedInUser().getType() == "ADMIN")
+			buttons.add(newShow);
+		buttons.add(logout);
+
+		buttons.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		p.add(buttons, JSplitPane.RIGHT);
+		p.setEnabled(false);
+		p.setDividerSize(0);
+		p.add(lab, JSplitPane.LEFT);
 
 		JSplitPane split = new JSplitPane();
 		split.setOrientation(JSplitPane.VERTICAL_SPLIT);
