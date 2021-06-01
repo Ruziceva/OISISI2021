@@ -102,19 +102,19 @@ public class LoginPage extends JPanel {
 		panel.add(loginBtn, c);
 
 		loginBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				UserController uc=new UserController();
-				boolean res=uc.logIn(usernameField.getText(), new String(passField.getPassword()));
-				if(!res) {
+				UserController uc = new UserController();
+				boolean res = uc.logIn(usernameField.getText(), new String(passField.getPassword()));
+				if (!res) {
 					error.setText("Pogresni podaci");
 				} else {
-					System.out.println("ide gas");
+					MainWindow.getInstance().showPage(new ShowsPage());
 				}
 			}
 		});
-		
+
 		JButton backBtn = new JButton("Nazad");
 		backBtn.setFont(btnFont);
 		backBtn.setSize(btnSize);
