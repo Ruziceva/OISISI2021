@@ -1,33 +1,34 @@
 package theater.view.components;
 
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import theater.GlobalState;
-import theater.model.Show;
+
 
 public class ShowTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 2710362894062472488L;
 
-	private List<String> columns = new ArrayList<String>();
+	private List<String> kolone = new ArrayList<String>();
 
-	public ShowTableModel() {
-		columns.add("ID");
-		columns.add("Ime");
-		columns.add("Opis");
-		columns.add("Datum");
-		columns.add("Cena");
+	private ShowTableModel() {
+		kolone.add("rec_id");
+		kolone.add("rec_doc");
+		kolone.add("rec_jmbg");
+		kolone.add("rec_date");
+		kolone.add("rec_price");
 		if (GlobalState.getInstance().getLoggedInUser().getType() == "ADMIN")
-			columns.add("");
+			kolone.add("removed");
 	}
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return columnIndex==5;
+		return false;// columnIndex >=4;
 	}
 
 	@Override
@@ -37,51 +38,65 @@ public class ShowTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return columns.size();
+		return kolone.size();
 	}
 
 	@Override
 	public String getColumnName(int column) {
-		return columns.get(column);
+		return kolone.get(column);
 	}
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return Long.class;
 		case 1:
 		case 2:
+			return String.class;
 		case 3:
 			return String.class;
 		case 4:
 			return Float.class;
 		case 5:
-			return String.class;
+			return Boolean.class;
 		default:
 			return null;
 		}
 	}
 
 	@Override
-	public Object getValueAt(int r, int c) {
-		Show show = GlobalState.getInstance().getShows().get(r);
-		switch (c) {
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		Recipe r = context.getRecipes().get(rowIndex);
+		switch (columnIndex) {
 		case 0:
-			return show.getId();
+			return r.getId();
+
 		case 1:
-			return show.getName();
+			return r.getDoctor();
+
 		case 2:
-			return show.getDescription();
+			return r.getJmbg();
 		case 3:
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-			return (show.getDate().format(formatter));
+			SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+			return f.format(r.getDate());
+			
 		case 4:
-			return show.getPrice();
+			return RecipeController.getInstance().getTotalPrice(rowIndex);
 		case 5:
-			return "Izmeni";
+			return r.isRemoved();
 
 		}
+
 		return null;
 	}
+
+	private static RecipeAbstractTableModel instance;
+
+	public static RecipeAbstractTableModel getInstance() {
+		if (instance == null)
+			instance = new RecipeAbstractTableModel();
+		return instance;
+	}
+
 }
