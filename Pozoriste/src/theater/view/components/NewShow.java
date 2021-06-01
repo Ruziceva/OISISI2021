@@ -25,7 +25,8 @@ import theater.model.Show;
 
 public class NewShow extends JDialog {
 
-	public NewShow() {
+	public NewShow(Show inputShow) {
+		// show is null when creating new one, else is the one being edited
 		setSize(500, 250);
 		setMinimumSize(new Dimension(500, 250));
 		setLocationRelativeTo(null);
@@ -45,7 +46,7 @@ public class NewShow extends JDialog {
 
 		JLabel dateLabel = new JLabel("Datum:");
 
-		JButton insert = (new JButton("Dodaj"));
+		JButton insert = (new JButton(inputShow == null ? "Dodaj" : "Izmeni"));
 		panel = new JPanel(new GridLayout(5, 2, 15, 5));
 
 		panel.add(nameLabel);
@@ -69,6 +70,14 @@ public class NewShow extends JDialog {
 
 		panel.add(insert);
 
+		if (inputShow != null) {
+			nameField.setText(inputShow.getName());
+			descriptionField.setText(inputShow.getDescription());
+			priceField.setText("" + inputShow.getPrice());
+			timeSpinner.setValue(Date.from(inputShow.getDate().atZone(ZoneId.systemDefault()).toInstant()));
+
+		}
+
 		panel.add(new JButton(new AbstractAction() {
 			{
 				putValue(Action.NAME, "Nazad");
@@ -86,25 +95,28 @@ public class NewShow extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				//TODO: validate
-				
+				// TODO: validate
+
 				String name = nameField.getText().trim();
 				String price = priceField.getText().trim();
 				String description = descriptionField.getText();
 				LocalDateTime date = ((Date) timeSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault())
 						.toLocalDateTime();
-			
-				Show show = new Show();
+
+				Show show = inputShow == null ? new Show() : inputShow;
+
 				show.setName(name);
 				show.setDescription(description);
 				show.setPrice(Float.parseFloat(price));
-				show.setId((long) GlobalState.getInstance().getShows().size());
+
 				show.setDate(date);
-				GlobalState.getInstance().getShows().add(show);
+				if (inputShow == null) {
+					show.setId((long) GlobalState.getInstance().getShows().size());
+					GlobalState.getInstance().getShows().add(show);
+				}
 				ShowTableModel.refresh();
 				setVisible(false);
-				
-				
+
 				dispose();
 
 			}
