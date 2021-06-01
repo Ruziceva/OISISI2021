@@ -2,8 +2,6 @@ package theater.controller;
 
 import theater.GlobalState;
 import theater.model.User;
-import theater.view.MainWindow;
-import theater.view.pages.HomePage;
 
 public class UserController {
 
@@ -31,10 +29,5 @@ public class UserController {
 		}
 		// else return false
 		return false;
-	}
-
-	public void logOut() {
-		GlobalState.getInstance().setLoggedInUser(null);
-		MainWindow.getInstance().showPage(new HomePage());
 	}
 }
