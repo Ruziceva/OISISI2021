@@ -67,7 +67,7 @@ public class ShowsPage extends JPanel {
 		newShow.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new NewShow(null).setVisible(true);
+				new NewShow().setVisible(true);
 			}
 		});
 		newShow.setPreferredSize(new Dimension(150, 40));

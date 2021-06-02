@@ -36,26 +36,27 @@ public class ShowsTable extends JTable {
 				public void actionPerformed(ActionEvent e) {
 					JTable table = (JTable) e.getSource();
 					int modelRow = Integer.valueOf(e.getActionCommand());
-					new NewShow(GlobalState.getInstance().getShows().get(modelRow)).setVisible(true);
+					// TODO: show edit form
 				}
 			};
 
 			new ButtonColumn(this, delete, 5);
 		}
-
-		// details:
+		
+		//details:
 		Action details = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				JTable table = (JTable) e.getSource();
 				int modelRow = Integer.valueOf(e.getActionCommand());
-				new ShowDetails(GlobalState.getInstance().getShows().get(modelRow)).setVisible(true);;
+				// TODO: show edit form
 			}
 		};
 
 		new ButtonColumn(this, details, 4);
-
+		
 		getTableHeader().setFont(new Font("arial", Font.BOLD, 24));
 
 	}
+
 
 }
