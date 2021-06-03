@@ -31,7 +31,7 @@ public class ShowsTable extends JTable {
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setModel(new ShowTableModel());
 		setFont(new Font("arial", Font.PLAIN, 24));
-		if (GlobalState.getInstance().getLoggedInUser().getType() == "ADMIN") {
+		if (GlobalState.getInstance().getLoggedInUser().getType().equals( "ADMIN")) {
 			Action delete = new AbstractAction() {
 				public void actionPerformed(ActionEvent e) {
 					JTable table = (JTable) e.getSource();

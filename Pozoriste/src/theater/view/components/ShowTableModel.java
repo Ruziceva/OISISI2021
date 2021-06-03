@@ -24,7 +24,7 @@ public class ShowTableModel extends AbstractTableModel {
 		columns.add("Cena");
 		columns.add("Rasprodato");
 		columns.add("");// details btn
-		if (GlobalState.getInstance().getLoggedInUser().getType() == "ADMIN")
+		if (GlobalState.getInstance().getLoggedInUser().getType().equals("ADMIN"))
 			columns.add(""); // edit btn
 	}
 

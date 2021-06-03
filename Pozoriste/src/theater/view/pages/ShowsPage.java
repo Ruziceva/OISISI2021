@@ -71,8 +71,8 @@ public class ShowsPage extends JPanel {
 			}
 		});
 		newShow.setPreferredSize(new Dimension(150, 40));
-		//add new btn for admin
-		if (GlobalState.getInstance().getLoggedInUser().getType() == "ADMIN")
+		// add new btn for admin
+		if (GlobalState.getInstance().getLoggedInUser().getType().equals("ADMIN"))
 			buttons.add(newShow);
 		buttons.add(logout);
 

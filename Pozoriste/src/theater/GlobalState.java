@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import theater.model.Show;
+import theater.model.Ticket;
 import theater.model.User;
 
 //global state of app (all users, shows, active user,.....)
@@ -19,6 +20,10 @@ public class GlobalState {
 
 	// all shows
 	private List<Show> shows;
+	
+	//all tickets
+	private List<Ticket> tickets;
+
 
 	// we keep constructor as private so class can force having of only one instance
 	// in app (singleton pattern)
@@ -46,6 +51,8 @@ public class GlobalState {
 		s.setId(0l);
 		s.setPrice(22);
 		shows.add(s);
+		
+		tickets=new LinkedList<>();
 	}
 
 	// this is how everywhere will be the same instance
@@ -78,5 +85,15 @@ public class GlobalState {
 	public void setShows(List<Show> shows) {
 		this.shows = shows;
 	}
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+	
+	
 
 }
