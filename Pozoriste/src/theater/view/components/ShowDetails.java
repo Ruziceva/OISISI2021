@@ -92,32 +92,41 @@ public class ShowDetails extends JDialog {
 
 		JButton reserve = new JButton(new AbstractAction() {
 			{
-				putValue(Action.NAME, "Rezervisi");
+				putValue(Action.NAME, GlobalState.getInstance().getLoggedInUser().getType().equals("USER") ? "Rezervisi"
+						: "Izvestaj");
 			}
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (Integer i : wantedSeats) {
-					inputShow.getSeats().put(i, true);
-					Ticket t = new Ticket();
-					t.setColumn(i % 5 + 1);
-					t.setId((long) GlobalState.getInstance().getTickets().size());
-					t.setOwner(GlobalState.getInstance().getLoggedInUser());
-					t.setPrice(inputShow.getPrice());
-					t.setRow((1 + (int) i / 6));
-					t.setShow(inputShow);
-					GlobalState.getInstance().getTickets().add(t);
+				if (GlobalState.getInstance().getLoggedInUser().getType().equals("USER")) {// TODO: validate number of
+																							// cards
+					for (Integer i : wantedSeats) {
+						inputShow.getSeats().put(i, true);
+						Ticket t = new Ticket();
+						t.setColumn(i % 5 + 1);
+						t.setId((long) GlobalState.getInstance().getTickets().size());
+						t.setOwner(GlobalState.getInstance().getLoggedInUser());
+						t.setPrice(inputShow.getPrice());
+						t.setRow((1 + (int) i / 6));
+						t.setShow(inputShow);
+						GlobalState.getInstance().getTickets().add(t);
+					}
+					if (inputShow.getSeats().values().stream().filter(v -> v).count() == 30) {
+						inputShow.setSold(true);
+						ShowTableModel.refresh();
+					}
+					setVisible(false);
+
 				}
-				if (inputShow.getSeats().values().stream().filter(v -> v).count() == 30) {
-					inputShow.setSold(true);
-					ShowTableModel.refresh();
+				// if admin is logged in create report
+				else {
+					new ReportForOneShow(inputShow).setVisible(true);
 				}
-				setVisible(false);
 
 			}
 		});
 
-		reserve.setFont(new Font("arial", Font.BOLD, 24));
+		reserve.setFont(new Font("arial", Font.PLAIN, 24));
 
 		buttons.add(reserve);
 		buttons.add(back);
@@ -148,7 +157,6 @@ public class ShowDetails extends JDialog {
 		if (GlobalState.getInstance().getLoggedInUser().getType().equals("USER")) {
 			add(price);
 		}
-
 		add(buttons);
 	}
 
@@ -188,11 +196,11 @@ public class ShowDetails extends JDialog {
 
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						if (Seat.this.state == "FREE") {
+						if (Seat.this.state.equals("FREE")) {
 							wantedSeats.add(number);
 							Seat.this.state = "WANTED";
 							setBackground(Color.YELLOW);
-						} else if (Seat.this.state == "WANTED") {
+						} else if (Seat.this.state.equals("WANTED")) {
 							Seat.this.state = "FREE";
 							wantedSeats.remove(number);
 							setBackground(Color.GREEN);
