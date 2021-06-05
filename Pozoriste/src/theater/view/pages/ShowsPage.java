@@ -1,18 +1,11 @@
 package theater.view.pages;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,12 +17,12 @@ import javax.swing.JTable;
 import theater.GlobalState;
 import theater.controller.UserController;
 import theater.view.components.NewShow;
+import theater.view.components.ReportForAllShows;
 import theater.view.components.ShowsTable;
 
 public class ShowsPage extends JPanel {
 
 	private JTable table;
-	private Image background;
 
 	public ShowsPage() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -37,14 +30,6 @@ public class ShowsPage extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		table = new ShowsTable();
 		scrollPane.setViewportView(table);
-
-		File f = null;
-		f = new File("./images/home.jpg");
-		try {
-			background = ImageIO.read(f);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
 		JLabel lab = new JLabel("Predstave");
 
@@ -70,10 +55,22 @@ public class ShowsPage extends JPanel {
 				new NewShow(null).setVisible(true);
 			}
 		});
+
+		JButton report = new JButton("Izvestaj");
+		report.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ReportForAllShows().setVisible(true);
+			}
+		});
+		report.setPreferredSize(new Dimension(150, 40));
 		newShow.setPreferredSize(new Dimension(150, 40));
 		// add new btn for admin
-		if (GlobalState.getInstance().getLoggedInUser().getType().equals("ADMIN"))
+		if (GlobalState.getInstance().getLoggedInUser().getType().equals("ADMIN")) {
 			buttons.add(newShow);
+			buttons.add(report);
+
+		}
 		buttons.add(logout);
 
 		buttons.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -90,13 +87,6 @@ public class ShowsPage extends JPanel {
 		split.setEnabled(false);
 		add(split);
 
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Dimension d = getSize();
-		g.drawImage(background.getScaledInstance(d.width, d.height, Image.SCALE_FAST), 0, 0, null);
 	}
 
 }
