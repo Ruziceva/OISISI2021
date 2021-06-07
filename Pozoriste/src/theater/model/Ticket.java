@@ -1,6 +1,8 @@
 package theater.model;
 
-public class Ticket {
+import java.io.Serializable;
+
+public class Ticket implements Serializable {
 	private Long id;
 	private Show show;
 	private User owner;

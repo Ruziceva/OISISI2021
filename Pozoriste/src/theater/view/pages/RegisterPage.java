@@ -138,11 +138,28 @@ public class RegisterPage extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO: validate...
+				String error="";				
 				String username = usernameField.getText().trim();
 				String password = new String(passwordField.getPassword());
+				String password2 = new String(passwordField2.getPassword());
 				String lastName = lnameField.getText().trim();
 				String firstName = nameField.getText().trim();
+				if(username.equals(""))
+					error+="Korisnicko ime nije uneto\n";
+				if(password.equals(""))
+					error+="Lozinka nije uneta\n";
+				if(!password.equals(password2))
+					error+="Lozinke se ne poklapaju\n";
+				if(firstName.equals(""))
+					error+="Ime nije uneto\n";
+				if(lastName.equals(""))
+					error+="Prezime nije uneto";
+				
+				if(!error.equals("")) {
+					JOptionPane.showMessageDialog(null, error, "Greska", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
 				User u = new User();
 				u.setUsername(username);
 				u.setPassword(password);

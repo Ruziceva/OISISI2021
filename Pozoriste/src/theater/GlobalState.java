@@ -1,5 +1,13 @@
 package theater;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,39 +28,31 @@ public class GlobalState {
 
 	// all shows
 	private List<Show> shows;
-	
-	//all tickets
-	private List<Ticket> tickets;
 
+	// all tickets
+	private List<Ticket> tickets;
 
 	// we keep constructor as private so class can force having of only one instance
 	// in app (singleton pattern)
 	private GlobalState() {
-		// TODO: load users from file
-		users = new LinkedList<User>();
-		shows = new LinkedList<Show>();
-		// add some temp users
-		User u = new User();
-		u.setUsername("admin");
-		u.setPassword("123");
-		u.setType("ADMIN");
-		users.add(u);
+		users = (List<User>) loadObjectFromFile("./users.data");
+		// if file is deleted we add default admin
+		if (users == null) {
+			users = new LinkedList<User>();
+			// add some temp users
+			User u = new User();
+			u.setUsername("admin");
+			u.setPassword("admin");
+			u.setType("ADMIN");
+			users.add(u);
+		}
+		shows = (List<Show>) loadObjectFromFile("./shows.data");
+		if (shows == null)
+			shows = new LinkedList<Show>();
 
-		u = new User();
-		u.setUsername("user");
-		u.setPassword("123");
-		u.setType("USER");
-		users.add(u);
-
-		Show s = new Show();
-		s.setDate(LocalDateTime.now());
-		s.setDescription("xd");
-		s.setName("LOL");
-		s.setId(0l);
-		s.setPrice(22);
-		shows.add(s);
-		
-		tickets=new LinkedList<>();
+		tickets = (List<Ticket>) loadObjectFromFile("./tickets.data");
+		if (tickets == null)
+			tickets = new LinkedList<>();
 	}
 
 	// this is how everywhere will be the same instance
@@ -93,7 +93,48 @@ public class GlobalState {
 	public void setTickets(List<Ticket> tickets) {
 		this.tickets = tickets;
 	}
-	
-	
+
+	public void saveAll() {
+		saveObjectToFile(users, "./users.data");
+		saveObjectToFile(shows, "./shows.data");
+		saveObjectToFile(tickets, "./tickets.data");
+	}
+
+	private void saveObjectToFile(Object o, String path) {
+		File f = new File(path);
+		ObjectOutputStream out = null;
+		try {
+			out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+			out.writeObject(o);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} finally {
+
+			try {
+				if (out != null)
+					out.close();
+			} catch (Exception e) {
+			}
+		}
+	}
+
+	private Object loadObjectFromFile(String path) {
+		File f = new File(path);
+		ObjectInputStream in = null;
+		Object ret = null;
+		try {
+			in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)));
+			ret = in.readObject();
+		} catch (Exception e) {
+			System.out.println();
+		} finally {
+			try {
+				if (in != null)
+					in.close();
+			} catch (Exception e) {
+			}
+		}
+		return ret;
+	}
 
 }

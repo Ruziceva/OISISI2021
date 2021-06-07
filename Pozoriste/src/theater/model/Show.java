@@ -1,10 +1,11 @@
 package theater.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Show {
+public class Show implements Serializable{
 	private Long id;
 	private String name;
 	private String description;
