@@ -13,6 +13,7 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -32,7 +33,6 @@ public class NewShow extends JDialog {
 		setLocationRelativeTo(null);
 		setModal(true);
 
-		// setLayout(new GridBagLayout());
 		JPanel panel = new JPanel();
 
 		JLabel nameLabel = new JLabel("Naziv:");
@@ -61,7 +61,7 @@ public class NewShow extends JDialog {
 		panel.add(dateLabel);
 
 		JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "dd-MM-yyyy HH:mm:ss");
+		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "yyyy-MM-dd HH:mm");
 		timeSpinner.setEditor(timeEditor);
 
 		timeSpinner.setValue(new Date()); //
@@ -96,20 +96,41 @@ public class NewShow extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 
 				// TODO: validate
-
+				String error = "";
 				String name = nameField.getText().trim();
 				String price = priceField.getText().trim();
 				String description = descriptionField.getText();
 				LocalDateTime date = ((Date) timeSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault())
 						.toLocalDateTime();
-
 				Show show = inputShow == null ? new Show() : inputShow;
+
+				if (name.equals("")) {
+					error += "Ime nije uneto\n";
+				}
+				try {
+					// check format
+					float p = Float.parseFloat(price);
+					// check value
+					if (p <= 0)
+						throw new Exception();
+				} catch (Exception ex) {
+					error += "Cena nije validna\n";
+				}
+				if (description.equals(""))
+					error += "Opis nije unet\n";
+				if (!date.isAfter(LocalDateTime.now())) {
+					error += "Datum nije validan";
+				}
+				if(!error.equals("")) {
+					JOptionPane.showMessageDialog(null, error, "Greska", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 
 				show.setName(name);
 				show.setDescription(description);
 				show.setPrice(Float.parseFloat(price));
-
 				show.setDate(date);
+
 				if (inputShow == null) {
 					show.setId((long) GlobalState.getInstance().getShows().size());
 					GlobalState.getInstance().getShows().add(show);
