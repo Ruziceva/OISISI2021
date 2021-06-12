@@ -36,7 +36,7 @@ public class ReportForOneShow extends JDialog {
 
 		back.setFont(new Font("arial", Font.PLAIN, 24));
 		float total = GlobalState.getInstance().getTickets().stream()
-				.filter(t -> t.getShow().getId() == inputShow.getId())
+				.filter(t -> t.getShow().getId().floatValue() == inputShow.getId().floatValue())
 				.reduce((Float) 0f, (acc, t) -> acc + t.getPrice(), Float::sum);
 
 		add(new JScrollPane(new ReportForOneShowTable(inputShow.getId())));

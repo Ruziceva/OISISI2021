@@ -2,11 +2,13 @@ package theater.view.components;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.table.AbstractTableModel;
 
 import theater.GlobalState;
 import theater.model.Show;
+import theater.model.Ticket;
 
 public class ReportForAllShowTableModel extends AbstractTableModel {
 
@@ -51,7 +53,7 @@ public class ReportForAllShowTableModel extends AbstractTableModel {
 		case 0:
 			return s.getId();
 		case 1:
-			return GlobalState.getInstance().getTickets().stream().filter(t -> t.getShow().getId() == s.getId())
+			return GlobalState.getInstance().getTickets().stream().filter(t -> t.getShow().getId().floatValue() == s.getId().floatValue())
 					.reduce((Float) 0f, (acc, t) -> acc + t.getPrice(), Float::sum);
 
 		}

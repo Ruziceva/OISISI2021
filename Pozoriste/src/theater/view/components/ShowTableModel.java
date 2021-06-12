@@ -50,6 +50,8 @@ public class ShowTableModel extends AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
+		if (columnIndex == 2)
+			return Float.class;
 		return String.class;
 	}
 
@@ -60,7 +62,7 @@ public class ShowTableModel extends AbstractTableModel {
 		case 0:
 			return show.getName();
 		case 1:
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 			return (show.getDate().format(formatter));
 		case 2:
 			return show.getPrice();
