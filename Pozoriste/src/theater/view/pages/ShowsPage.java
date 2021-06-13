@@ -18,6 +18,7 @@ import theater.GlobalState;
 import theater.controller.UserController;
 import theater.view.components.NewShow;
 import theater.view.components.ReportForAllShows;
+import theater.view.components.SearchBar;
 import theater.view.components.ShowsTable;
 
 public class ShowsPage extends JPanel {
@@ -69,7 +70,6 @@ public class ShowsPage extends JPanel {
 		if (GlobalState.getInstance().getLoggedInUser().getType().equals("ADMIN")) {
 			buttons.add(newShow);
 			buttons.add(report);
-
 		}
 		buttons.add(logout);
 
@@ -81,7 +81,19 @@ public class ShowsPage extends JPanel {
 
 		JSplitPane split = new JSplitPane();
 		split.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		split.add(p, JSplitPane.TOP);
+
+		JSplitPane searchTitleSplit = new JSplitPane();
+		searchTitleSplit.add(p, JSplitPane.TOP);
+		searchTitleSplit.add(new SearchBar(table), JSplitPane.BOTTOM);
+		searchTitleSplit.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		
+		searchTitleSplit.setDividerSize(0);
+		searchTitleSplit.setEnabled(false);
+		
+		split.add(searchTitleSplit, JSplitPane.TOP);
+
+		
+		
 		split.add(scrollPane, JSplitPane.BOTTOM);
 		split.setDividerSize(0);
 		split.setEnabled(false);

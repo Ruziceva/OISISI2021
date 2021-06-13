@@ -30,7 +30,6 @@ public class ReportForOneShow extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-
 			}
 		});
 
