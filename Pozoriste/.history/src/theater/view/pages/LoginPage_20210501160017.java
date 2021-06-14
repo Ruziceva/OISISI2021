@@ -27,6 +27,7 @@ import theater.view.MainWindow;
 public class LoginPage extends JPanel {
 
 	private Dimension btnSize = new Dimension(200, 60);
+	private Font btnFont = new Font("arial", Font.PLAIN, 32);
 	private Image background;
 
 	public LoginPage() {
@@ -69,6 +70,8 @@ public class LoginPage extends JPanel {
 		c.gridx = 1;
 		panel.add(usernameField, c);
 
+		passLabel.setFont(new Font("arial", Font.PLAIN, 32));
+		usernameLabel.setFont(new Font("arial", Font.PLAIN, 32));
 
 		c.gridx = 0;
 		c.gridy = 1;
@@ -92,6 +95,7 @@ public class LoginPage extends JPanel {
 		c.gridy = 2;
 
 		JButton loginBtn = new JButton("Prijava");
+		loginBtn.setFont(btnFont);
 		loginBtn.setBackground(Color.WHITE);
 
 		loginBtn.setSize(btnSize);
@@ -112,6 +116,7 @@ public class LoginPage extends JPanel {
 		});
 
 		JButton backBtn = new JButton("Nazad");
+		backBtn.setFont(btnFont);
 		backBtn.setSize(btnSize);
 		backBtn.setBackground(Color.WHITE);
 

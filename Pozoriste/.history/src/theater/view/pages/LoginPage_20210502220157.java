@@ -92,6 +92,7 @@ public class LoginPage extends JPanel {
 		c.gridy = 2;
 
 		JButton loginBtn = new JButton("Prijava");
+		loginBtn.setFont(btnFont);
 		loginBtn.setBackground(Color.WHITE);
 
 		loginBtn.setSize(btnSize);
@@ -112,6 +113,7 @@ public class LoginPage extends JPanel {
 		});
 
 		JButton backBtn = new JButton("Nazad");
+		backBtn.setFont(btnFont);
 		backBtn.setSize(btnSize);
 		backBtn.setBackground(Color.WHITE);
 

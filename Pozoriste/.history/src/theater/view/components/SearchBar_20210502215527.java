@@ -32,14 +32,17 @@ public class SearchBar extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel lblNewLabel = new JLabel("Parametar:");
+		lblNewLabel.setFont(new Font("arial", Font.PLAIN, 24));
 		panel.add(lblNewLabel);
 
 		JComboBox comboBox = new JComboBox();
+		comboBox.setFont(new Font("arial", Font.PLAIN, 24));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { "Naziv", "Cena", "Datum" }));
 		comboBox.setSelectedIndex(0);
 		panel.add(comboBox);
 
 		JLabel lblVrednost = new JLabel("Vrednost:");
+		lblVrednost.setFont(new Font("arial", Font.PLAIN, 24));
 		panel.add(lblVrednost);
 		JCheckBox cb1 = new JCheckBox();
 		panel.add(cb1);
@@ -51,6 +54,8 @@ public class SearchBar extends JPanel {
 		JSpinner timeSpinner2 = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor timeEditor2 = new JSpinner.DateEditor(timeSpinner2, "yyyy-MM-dd HH:mm");
 		timeSpinner2.setEditor(timeEditor2);
+		timeSpinner2.setFont(new Font("arial", Font.PLAIN, 24));
+		timeSpinner1.setFont(new Font("arial", Font.PLAIN, 24));
 		cb1.addActionListener(new ActionListener() {
 
 			@Override
@@ -59,6 +64,7 @@ public class SearchBar extends JPanel {
 			}
 		});
 		field1 = new JTextField();
+		field1.setFont(new Font("arial", Font.PLAIN, 24));
 		panel.add(field1);
 		field1.setColumns(10);
 
@@ -72,6 +78,7 @@ public class SearchBar extends JPanel {
 		});
 		panel.add(cb2);
 		field2 = new JTextField();
+		field2.setFont(new Font("arial", Font.PLAIN, 24));
 		field2.setColumns(10);
 		panel.add(field2);
 
@@ -113,6 +120,7 @@ public class SearchBar extends JPanel {
 			}
 		});
 
+		btnNewButton_1.setFont(new Font("arial", Font.PLAIN, 24));
 		panel.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(new ActionListener() {
 

@@ -91,6 +91,7 @@ public class RegisterPage extends JPanel {
 
 		JButton register = (new JButton("Registruj se"));
 		register.setFocusPainted(false);
+		register.setFont(btnFont);
 		register.setSize(btnSize);
 		register.setBackground(Color.WHITE);
 
@@ -112,6 +113,7 @@ public class RegisterPage extends JPanel {
 		panel.add(register);
 
 		JButton backBtn = new JButton("Nazad");
+		backBtn.setFont(btnFont);
 		backBtn.setSize(btnSize);
 		backBtn.setBackground(Color.WHITE);
 
@@ -129,28 +131,28 @@ public class RegisterPage extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String error = "";
+				String error="";				
 				String username = usernameField.getText().trim();
 				String password = new String(passwordField.getPassword());
 				String password2 = new String(passwordField2.getPassword());
 				String lastName = lnameField.getText().trim();
 				String firstName = nameField.getText().trim();
-				if (username.equals(""))
-					error += "Korisnicko ime nije uneto\n";
-				if (password.equals(""))
-					error += "Lozinka nije uneta\n";
-				if (!password.equals(password2))
-					error += "Lozinke se ne poklapaju\n";
-				if (firstName.equals(""))
-					error += "Ime nije uneto\n";
-				if (lastName.equals(""))
-					error += "Prezime nije uneto";
-
-				if (!error.equals("")) {
+				if(username.equals(""))
+					error+="Korisnicko ime nije uneto\n";
+				if(password.equals(""))
+					error+="Lozinka nije uneta\n";
+				if(!password.equals(password2))
+					error+="Lozinke se ne poklapaju\n";
+				if(firstName.equals(""))
+					error+="Ime nije uneto\n";
+				if(lastName.equals(""))
+					error+="Prezime nije uneto";
+				
+				if(!error.equals("")) {
 					JOptionPane.showMessageDialog(null, error, "Greska", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-
+				
 				User u = new User();
 				u.setUsername(username);
 				u.setPassword(password);
@@ -159,7 +161,7 @@ public class RegisterPage extends JPanel {
 				u.setType("USER");
 				if (!new UserController().register(u)) {
 					JOptionPane.showMessageDialog(null, "Korisnik vec postoji", "Greska", JOptionPane.ERROR_MESSAGE);
-				} else {
+				}else {
 					MainWindow.getInstance().showPage(new LoginPage());
 				}
 			}

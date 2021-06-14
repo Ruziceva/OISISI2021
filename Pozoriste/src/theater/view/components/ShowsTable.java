@@ -26,7 +26,6 @@ public class ShowsTable extends JTable {
 		this.setModel(new ShowTableModel());
 		((TableRowSorter )getRowSorter()).setSortable(4,false);
 
-		setFont(new Font("arial", Font.PLAIN, 24));
 		if (GlobalState.getInstance().getLoggedInUser().getType().equals( "ADMIN")) {
 			((TableRowSorter )getRowSorter()).setSortable(5,false);
 

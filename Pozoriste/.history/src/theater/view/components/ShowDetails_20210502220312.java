@@ -31,7 +31,7 @@ public class ShowDetails extends JDialog {
 	private Set<Integer> wantedSeats = new HashSet<>();
 
 	public ShowDetails(Show inputShow) {
-		setSize(500, 670);
+		setSize(500, 650);
 		setLocationRelativeTo(null);
 		setModal(true);
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
@@ -86,6 +86,9 @@ public class ShowDetails extends JDialog {
 			}
 		});
 
+		back.setFont(new Font("arial", Font.BOLD, 24));
+
+		back.setBorder(new EmptyBorder(0, 20, 0, 0));
 
 		JButton reserve = new JButton(new AbstractAction() {
 			{
@@ -123,6 +126,7 @@ public class ShowDetails extends JDialog {
 			}
 		});
 
+
 		buttons.add(reserve);
 		buttons.add(back);
 
@@ -142,7 +146,7 @@ public class ShowDetails extends JDialog {
 		seats.setLayout(new GridLayout(6, 5, 10, 10));
 		for (Entry<Integer, Boolean> input : inputShow.getSeats().entrySet()) {
 			int i = input.getKey();
-			JPanel s = new Seat(1 + (int) i / 5, i % 5 + 1, input.getValue() ? "NOT_FREE" : "FREE", wantedSeats, i,
+			JPanel s = new Seat(1 + (int) i / 6, i % 5 + 1, input.getValue() ? "NOT_FREE" : "FREE", wantedSeats, i,
 					totalPrice, countLabel, inputShow.getPrice());
 			seats.add(s);
 		}
@@ -167,14 +171,9 @@ public class ShowDetails extends JDialog {
 			} else {
 				setBackground(Color.RED);
 			}
-			JLabel r = new JLabel("Red: " + row);
-			JLabel c = new JLabel("Kolona: " + col);
-			r.setFont(new Font("arial", Font.PLAIN, 14));
-			c.setFont(new Font("arial", Font.PLAIN, 14));
+			add(new JLabel("Red: " + row));
 
-			add(r);
-
-			add(c);
+			add(new JLabel("Kolona: " + col));
 			if (GlobalState.getInstance().getLoggedInUser().getType().equals("USER"))
 				addMouseListener(new MouseListener() {
 

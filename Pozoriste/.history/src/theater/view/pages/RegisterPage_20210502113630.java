@@ -33,6 +33,7 @@ public class RegisterPage extends JPanel {
 	 */
 	private static final long serialVersionUID = -7834036077421634526L;
 	private Dimension btnSize = new Dimension(200, 60);
+	private Font btnFont = new Font("arial", Font.PLAIN, 32);
 	private Image background;
 
 	public RegisterPage() {
@@ -53,6 +54,7 @@ public class RegisterPage extends JPanel {
 		gc.insets = new Insets(0, 0, 100, 0);
 		gc.gridy = 0;
 		JLabel title = new JLabel("POZORISTE");
+		title.setFont(new Font("arial", Font.BOLD, 50));
 		title.setForeground(Color.WHITE);
 		add(title, gc);
 		gc.gridy = 1;
@@ -61,29 +63,34 @@ public class RegisterPage extends JPanel {
 
 		JLabel usernameLabel = new JLabel("Korisnicko ime:");
 		JTextField usernameField = new JTextField();
+		usernameLabel.setFont(new Font("arial", Font.PLAIN, 32));
 
 		usernameField.setPreferredSize(new Dimension(150, 30));
 		usernameLabel.setForeground(Color.WHITE);
 
 		JLabel passwordLabel = new JLabel("Lozinka :");
+		passwordLabel.setFont(new Font("arial", Font.PLAIN, 32));
 
 		JPasswordField passwordField = new JPasswordField();
 		passwordField.setPreferredSize(new Dimension(150, 30));
 		passwordLabel.setForeground(Color.WHITE);
 
 		JLabel passwordLabel2 = new JLabel("Ponovljena lozinka :");
+		passwordLabel2.setFont(new Font("arial", Font.PLAIN, 32));
 
 		JPasswordField passwordField2 = new JPasswordField();
 		passwordField2.setPreferredSize(new Dimension(150, 30));
 		passwordLabel2.setForeground(Color.WHITE);
 
 		JLabel nameLabel = new JLabel("Ime:");
+		nameLabel.setFont(new Font("arial", Font.PLAIN, 32));
 
 		JTextField nameField = new JTextField();
 		nameField.setPreferredSize(new Dimension(150, 30));
 		nameLabel.setForeground(Color.WHITE);
 
 		JLabel lNameLabel = new JLabel("Prezime :");
+		lNameLabel.setFont(new Font("arial", Font.PLAIN, 32));
 
 		JTextField lnameField = new JTextField();
 		lnameField.setPreferredSize(new Dimension(150, 30));
@@ -91,6 +98,7 @@ public class RegisterPage extends JPanel {
 
 		JButton register = (new JButton("Registruj se"));
 		register.setFocusPainted(false);
+		register.setFont(btnFont);
 		register.setSize(btnSize);
 		register.setBackground(Color.WHITE);
 
@@ -112,6 +120,7 @@ public class RegisterPage extends JPanel {
 		panel.add(register);
 
 		JButton backBtn = new JButton("Nazad");
+		backBtn.setFont(btnFont);
 		backBtn.setSize(btnSize);
 		backBtn.setBackground(Color.WHITE);
 
@@ -129,28 +138,28 @@ public class RegisterPage extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String error = "";
+				String error="";				
 				String username = usernameField.getText().trim();
 				String password = new String(passwordField.getPassword());
 				String password2 = new String(passwordField2.getPassword());
 				String lastName = lnameField.getText().trim();
 				String firstName = nameField.getText().trim();
-				if (username.equals(""))
-					error += "Korisnicko ime nije uneto\n";
-				if (password.equals(""))
-					error += "Lozinka nije uneta\n";
-				if (!password.equals(password2))
-					error += "Lozinke se ne poklapaju\n";
-				if (firstName.equals(""))
-					error += "Ime nije uneto\n";
-				if (lastName.equals(""))
-					error += "Prezime nije uneto";
-
-				if (!error.equals("")) {
+				if(username.equals(""))
+					error+="Korisnicko ime nije uneto\n";
+				if(password.equals(""))
+					error+="Lozinka nije uneta\n";
+				if(!password.equals(password2))
+					error+="Lozinke se ne poklapaju\n";
+				if(firstName.equals(""))
+					error+="Ime nije uneto\n";
+				if(lastName.equals(""))
+					error+="Prezime nije uneto";
+				
+				if(!error.equals("")) {
 					JOptionPane.showMessageDialog(null, error, "Greska", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-
+				
 				User u = new User();
 				u.setUsername(username);
 				u.setPassword(password);
@@ -159,7 +168,7 @@ public class RegisterPage extends JPanel {
 				u.setType("USER");
 				if (!new UserController().register(u)) {
 					JOptionPane.showMessageDialog(null, "Korisnik vec postoji", "Greska", JOptionPane.ERROR_MESSAGE);
-				} else {
+				}else {
 					MainWindow.getInstance().showPage(new LoginPage());
 				}
 			}

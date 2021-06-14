@@ -17,6 +17,7 @@ public class ReportForAllShowsTable extends JTable {
 
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setModel(new ReportForAllShowTableModel());
+		setFont(new Font("arial", Font.PLAIN, 24));
 
 		getTableHeader().setFont(new Font("arial", Font.BOLD, 24));
 

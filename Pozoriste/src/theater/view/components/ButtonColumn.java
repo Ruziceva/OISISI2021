@@ -47,7 +47,11 @@ public class ButtonColumn extends AbstractCellEditor
 		this.action = action;
 
 		renderButton = new JButton();
+		renderButton.setFont(new Font("arial",Font.PLAIN,18));
+
 		editButton = new JButton();
+		editButton.setFont(new Font("arial",Font.PLAIN,18));
+
 		editButton.setFocusPainted( false );
 		editButton.addActionListener( this );
 		originalBorder = editButton.getBorder();

@@ -33,12 +33,14 @@ public class ReportForOneShow extends JDialog {
 			}
 		});
 
+		back.setFont(new Font("arial", Font.PLAIN, 24));
 		float total = GlobalState.getInstance().getTickets().stream()
 				.filter(t -> t.getShow().getId().floatValue() == inputShow.getId().floatValue())
 				.reduce((Float) 0f, (acc, t) -> acc + t.getPrice(), Float::sum);
 
 		add(new JScrollPane(new ReportForOneShowTable(inputShow.getId())));
 		JLabel tot = new JLabel("UKUPNO: " + total);
+		tot.setFont(new Font("arial", Font.PLAIN, 24));
 		tot.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(tot);
 		add(back);

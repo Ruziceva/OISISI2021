@@ -56,6 +56,7 @@ public class HomePage extends JPanel {
 		gc.insets = new Insets(10, 0, 0, 0);
 
 		JButton loginBtn = new JButton("Prijava");
+		loginBtn.setFont(btnFont);
 		loginBtn.setFocusPainted(false);
 		loginBtn.setPreferredSize(btnSize);
 		loginBtn.setBackground(Color.WHITE);
